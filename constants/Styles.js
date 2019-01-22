@@ -78,6 +78,11 @@ const styles = StyleSheet.create({
   navigationFilename: {
     marginTop: 5,
   },
+  // header: {
+  //   textAlign: 'center',
+  //   height: 
+
+  // },
   helpContainer: {
     marginTop: 15,
     alignItems: 'center',
@@ -109,10 +114,12 @@ const styles = StyleSheet.create({
   },
   hot: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'center',  //vertical alignment. baseline aligns text
+    justifyContent: 'center', //between, around
     backgroundColor: 'red'
   }
 });
 
 export default styles;
+
+//<View style={[(this.props.isTrue) ? styles.bgcolorBlack : styles.bgColorWhite]}>

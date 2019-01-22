@@ -8,11 +8,7 @@ const Searching = (props) => {
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <View style={styles.welcomeContainer}>
           <Image
-            source={
-              __DEV__
-                ? require('../assets/images/robot-dev.png')
-                : require('../assets/images/robot-prod.png')
-            }
+            source={require('../assets/images/map.jpeg')}
             style={styles.welcomeImage}
           />
         </View>
