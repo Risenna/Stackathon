@@ -4,37 +4,34 @@ import styles from '../constants/Styles'
 
 const Searching = (props) => {
   return (
-    <View style={styles.container}>
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <View style={styles.welcomeContainer}>
-          <Image
-            source={require('../assets/images/map.jpeg')}
-            style={styles.welcomeImage}
-          />
+    <View nativeID="markContainer" style={styles.markContainer}>
+      <View nativeID="headerContainer" style={styles.headerContainer}>
+        <Text style={styles.headerPrefix}>You are getting</Text>
+        <Text style={styles.headerContent}>HOTTER!</Text>
+      </View>
+
+      <View nativeID="bodyContainer" style={styles.bodyContainer}>
+        <Image
+          source={require('../assets/images/map.jpeg')}
+          style={styles.treasureImage}
+        />
+        <View style={styles.markButtonContainer}>
+          {/* <Text style={styles.headerPrefix}>I give up :(</Text> */}
+          <Button
+            color="black"
+            style={styles.markButton}
+            title="Start Over"
+            onPress={props.onPress} />
         </View>
-        <Text style={styles.getStartedText}>
-          Here is your current position:
-        </Text>
-        <Text>{`Latitude: ${props.currentLatitude}
-                    Longitude: ${props.currentLongitude}
-                    State count: ${props.count}`}
-          {props.error ?
-            <Text>Error: {props.error}</Text>
-            : null}
-        </Text>
-        <Text>
-          {`You are ${props.distance} meters from the marked location.`}
-        </Text>
-        <View style={styles.mark}>
-        <Text>
-          I give up! :(
-        </Text>
-          <Button title="Start Over" color="white" onPress={props.onPress} />
-        </View>
-      </ScrollView>
+      </View>
     </View>
   )
 }
 
 export default Searching
+
+
+{/* <Text>
+{`You are ${props.distance} meters from the marked location.`}
+</Text> */}
 

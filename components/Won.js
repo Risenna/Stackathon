@@ -4,21 +4,25 @@ import styles from '../constants/Styles'
 
 const Won = (props) => {
   return (
-    <View style={styles.container}>
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <View style={styles.welcomeContainer}>
-          <Image
-            source={require('../assets/images/treasure.jpeg')}
-            style={styles.welcomeImage}
-          />
+    <View nativeID="markContainer" style={styles.markContainer}>
+      <View nativeID="headerContainer" style={styles.headerContainer}>
+        <Text style={styles.headerPrefix}>Hooray,</Text>
+        <Text style={styles.headerContent}>You Won!</Text>
+      </View>
+
+      <View nativeID="bodyContainer" style={styles.bodyContainer}>
+        <Image
+          source={require('../assets/images/treasure2.jpeg')}
+          style={styles.treasureImage}
+        />
+        <View style={styles.markButtonContainer}>
+          <Button
+            color="black"
+            style={styles.markButton}
+            title="New Game"
+            onPress={props.onPress} />
         </View>
-        <Text style={styles.getStartedText}>
-          Hooray, you won!!!!!!!!
-        </Text>
-        <View style={styles.mark}>
-          <Button title="New Game" color="white" onPress={props.onPress} />
-        </View>
-      </ScrollView>
+      </View>
     </View>
   )
 }

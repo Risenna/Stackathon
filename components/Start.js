@@ -4,21 +4,25 @@ import styles from '../constants/Styles'
 
 const Start = (props) => {
   return (
-    <View style={styles.container}>
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <View style={styles.welcomeContainer}>
-          <Image
-            source={require('../assets/images/map.jpeg')}
-            style={styles.welcomeImage}
-          />
+    <View nativeID="markContainer" style={styles.markContainer}>
+      <View nativeID="headerContainer" style={styles.headerContainer}>
+        <Text style={styles.headerPrefix}>Click to</Text>
+        <Text style={styles.headerContent}>Begin Adventure!</Text>
+      </View>
+
+      <View nativeID="bodyContainer" style={styles.bodyContainer}>
+        <Image
+          source={require('../assets/images/map.jpeg')}
+          style={styles.treasureImage}
+        />
+        <View style={styles.markButtonContainer}>
+          <Button
+            color="black"
+            style={styles.markButton}
+            title="Start"
+            onPress={props.onPress} />
         </View>
-        <Text>
-          Click Start to begin the search!
-        </Text>
-        <View style={styles.start}>
-          <Button title="Start!" color="white" onPress={props.onPress} />
-        </View>
-      </ScrollView>
+      </View>
     </View>
   )
 }

@@ -1,26 +1,28 @@
 import React from 'react'
-import { Button, Image, ScrollView, Text, View } from 'react-native'
+import { Button, Image, Text, View } from 'react-native'
 import styles from '../constants/Styles'
 
 const Mark = (props) => {
   return (
-    <View style={styles.container}>
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <View style={styles.welcomeContainer}>
-          <View>
-            <Text>
-              Welcome to the Treasure Hunt!
-      </Text>
-          </View>
-          <Image
-            source={require('../assets/images/treasure-chest.png')}
-            style={styles.welcomeImage}
-          />
+    <View nativeID="markContainer" style={styles.markContainer}>
+      <View nativeID="headerContainer" style={styles.headerContainer}>
+        <Text style={styles.headerPrefix}>Welcome to</Text>
+        <Text style={styles.headerContent}>The Treasure Hunt!</Text>
+      </View>
+
+      <View nativeID="bodyContainer" style={styles.bodyContainer}>
+        <Image
+          source={require('../assets/images/treasure-chest.png')}
+          style={styles.treasureImage}
+        />
+        <View style={styles.markButtonContainer}>
+          <Button
+            color="black"
+            style={styles.markButton}
+            title="Bury Treasure"
+            onPress={props.onPress} />
         </View>
-        <View style={styles.mark}>
-          <Button title="Bury Treasure" color="white" onPress={props.onPress} />
-        </View>
-      </ScrollView>
+      </View>
     </View>
   )
 }

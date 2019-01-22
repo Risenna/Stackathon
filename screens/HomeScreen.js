@@ -16,6 +16,7 @@ const initialState = {
   distance: Infinity,
   started: false,
   error: null,
+  hotter: false,
 }
 
 export default class HomeScreen extends React.Component {
@@ -53,6 +54,7 @@ export default class HomeScreen extends React.Component {
             };
             let distToMark = geolib.getDistance(startLocation, markedLocation, 1);
             newState.distance = distToMark;
+            newState.hotter = distToMark < previousState.distToMark;
           }
           return newState;
         });
