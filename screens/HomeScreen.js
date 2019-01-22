@@ -54,7 +54,10 @@ export default class HomeScreen extends React.Component {
             };
             let distToMark = geolib.getDistance(startLocation, markedLocation, 1);
             newState.distance = distToMark;
-            newState.hotter = distToMark < previousState.distToMark;
+            newState.hotter = distToMark < previousState.distance;
+            // console.log('distance', newState.distance, previousState.distToMark)
+            // console.log('hotter', newState.hotter)
+
           }
           return newState;
         });

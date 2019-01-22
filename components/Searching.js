@@ -7,20 +7,20 @@ const Searching = (props) => {
     <View nativeID="markContainer" style={styles.markContainer}>
       <View nativeID="headerContainer" style={styles.headerContainer}>
         <Text style={styles.headerPrefix}>You are getting</Text>
-        <Text style={styles.headerContent}>HOTTER!</Text>
+        <Text style={styles.headerContent}>{props.hotter ? 'HOTTER!' : 'COLDER!'}</Text>
       </View>
 
       <View nativeID="bodyContainer" style={styles.bodyContainer}>
         <Image
-          source={require('../assets/images/map.jpeg')}
+          source={props.hotter ? require('../assets/images/fire.jpg')
+          : require('../assets/images/polarbears.jpg')}
           style={styles.treasureImage}
         />
         <View style={styles.markButtonContainer}>
-          {/* <Text style={styles.headerPrefix}>I give up :(</Text> */}
           <Button
             color="black"
             style={styles.markButton}
-            title="Start Over"
+            title="I Give Up :("
             onPress={props.onPress} />
         </View>
       </View>
