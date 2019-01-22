@@ -89,11 +89,29 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#2e78b7',
   },
-  center: {
+  mark: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'purple'
+  },
+  start: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'green'
+  },
+  cold: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'blue'
+  },
+  hot: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'red'
   }
 });
 

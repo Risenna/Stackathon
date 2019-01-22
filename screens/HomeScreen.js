@@ -1,6 +1,9 @@
 import React from 'react';
 import geolib from 'geolib'
 import Mark from '../components/Mark'
+import Start from '../components/Start'
+import Searching from '../components/Searching'
+import Won from '../components/Won'
 import {
   Button,
   Image,
@@ -14,21 +17,24 @@ import {
 import { WebBrowser } from 'expo';
 import styles from '../constants/Styles'
 
+const initialState = {
+  count: 0,
+  markedLatitude: null,
+  markedLongitude: null,
+  currentLatitude: null,
+  currentLongitude: null,
+  distance: 5000,
+  started: false,
+  won: false,
+  error: null,
+}
+
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props)
     this.watchId = 0;
     this.count = 0;
-    this.state = {
-      count: 0,
-      markedLatitude: null,
-      markedLongitude: null,
-      currentLatitude: null,
-      currentLongitude: null,
-      distance: 5000,
-      error: null,
-    }
-    this.handleMarkPress = this.handleMarkPress.bind(this)
+    this.state = initialState;
   }
   static navigationOptions = {
     header: null,
@@ -68,54 +74,34 @@ export default class HomeScreen extends React.Component {
   render() {
     if (!this.state.markedLatitude) {
       return (
-          <Mark onPress={this.handleMarkPress} />
+        <Mark onPress={this.handleMarkPress} />
+        //sets coordinates for markedLocation
       );
-    } else {
+    } else if (!this.state.started) {
       return (
-        <View style={styles.container}>
-          <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-            <View style={styles.welcomeContainer}>
-              <Image
-                source={
-                  __DEV__
-                    ? require('../assets/images/robot-dev.png')
-                    : require('../assets/images/robot-prod.png')
-                }
-                style={styles.welcomeImage}
-              />
-            </View>
-
-            <View style={styles.getStartedContainer}>
-
-              <Text style={styles.getStartedText}>
-                Here is your marked position:
-              </Text>
-              <Text>{`Latitude: ${this.state.markedLatitude}
-                    Longitude: ${this.state.markedLongitude}
-                    State count: ${this.state.count}
-                    count: ${this.count}`}
-                {this.state.error ? <Text>Error: {this.state.error}</Text> : null}
-              </Text>
-
-              <Text style={styles.getStartedText}>
-                Here is your current position:
-              </Text>
-              <Text>{`Latitude: ${this.state.currentLatitude}
-                    Longitude: ${this.state.currentLongitude}
-                    State count: ${this.state.count}
-                    count: ${this.count}`}
-                {this.state.error ?
-                  <Text>Error: {this.state.error}</Text>
-                  : null}
-              </Text>
-              <Text>
-                {`You are ${this.state.distance} meters from the marked location.`}
-              </Text>
-            </View>
-
-          </ScrollView>
+        <Start onPress={this.handleStartPress} />
+        //begins the game, started = true
+      );
+    } else if (this.state.distance > 2) {
+      return (
+        //renders Searching component while dist > 2
+        <View style={styles.getStartedContainer}>
+          <Searching {...this.state} onPress={this.handleNewGamePress} />
         </View>
       );
+    } else {
+      //distance < 2 so render 'You Won' screen (Play again button)
+      return (
+        <Won onPress={this.handleNewGamePress} />
+      )
+
+      // this.state.gameWon()  
+      //sets 'won' = to true  now that dist < 2
+      //do something to set the state back!
+      //Marked = true, started = true, distance <=3. render 'U won, play again?'
+      //Playagain button onPress - set state back to initial state, render Mark again! (should this be automatic?)
+      //while won is true, render Play again screen
+      //Play again pressed, won set back to false, everything set back, render Mark
     }
   }
 
@@ -142,7 +128,7 @@ export default class HomeScreen extends React.Component {
     }
   }
 
-  async handleMarkPress() {
+  handleMarkPress = async () => {
     await navigator.geolocation.getCurrentPosition((position) => {
       this.setState({
         markedLatitude: position.coords.latitude,
@@ -152,6 +138,16 @@ export default class HomeScreen extends React.Component {
     },
       (error) => this.setState({ error: error }),
       { enableHighAccuracy: true, timeout: 1000, maximumAge: 0 })
+  }
+
+  handleStartPress = () => {
+    this.setState({
+      started: true
+    })
+  }
+
+  handleNewGamePress = () => {
+    this.setState(initialState)
   }
 
   _handleLearnMorePress = () => {
@@ -165,94 +161,3 @@ export default class HomeScreen extends React.Component {
   };
 }
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     flexDirection: 'column',
-//     backgroundColor: '#fff',
-//   },
-//   developmentModeText: {
-//     marginBottom: 20,
-//     color: 'rgba(0,0,0,0.4)',
-//     fontSize: 14,
-//     lineHeight: 19,
-//     textAlign: 'center',
-//   },
-//   contentContainer: {
-//     paddingTop: 30,
-//   },
-//   welcomeContainer: {
-//     alignItems: 'center',
-//     marginTop: 10,
-//     marginBottom: 20,
-//   },
-//   welcomeImage: {
-//     width: 100,
-//     height: 80,
-//     resizeMode: 'contain',
-//     marginTop: 3,
-//     marginLeft: -10,
-//   },
-//   getStartedContainer: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     marginHorizontal: 50,
-//   },
-//   homeScreenFilename: {
-//     marginVertical: 7,
-//   },
-//   codeHighlightText: {
-//     color: 'rgba(96,100,109, 0.8)',
-//   },
-//   codeHighlightContainer: {
-//     backgroundColor: 'rgba(0,0,0,0.05)',
-//     borderRadius: 3,
-//     paddingHorizontal: 4,
-//   },
-//   getStartedText: {
-//     fontSize: 23,
-//     color: 'rgba(96,100,109, 1)',
-//     lineHeight: 24,
-//     textAlign: 'center',
-//   },
-//   tabBarInfoContainer: {
-//     position: 'absolute',
-//     bottom: 0,
-//     left: 0,
-//     right: 0,
-//     ...Platform.select({
-//       ios: {
-//         shadowColor: 'black',
-//         shadowOffset: { height: -3 },
-//         shadowOpacity: 0.1,
-//         shadowRadius: 3,
-//       },
-//       android: {
-//         elevation: 20,
-//       },
-//     }),
-//     alignItems: 'center',
-//     backgroundColor: '#fbfbfb',
-//     paddingVertical: 20,
-//   },
-//   tabBarInfoText: {
-//     fontSize: 17,
-//     color: 'rgba(96,100,109, 1)',
-//     textAlign: 'center',
-//   },
-//   navigationFilename: {
-//     marginTop: 5,
-//   },
-//   helpContainer: {
-//     marginTop: 15,
-//     alignItems: 'center',
-//   },
-//   helpLink: {
-//     paddingVertical: 15,
-//   },
-//   helpLinkText: {
-//     fontSize: 14,
-//     color: '#2e78b7',
-//   },
-// });

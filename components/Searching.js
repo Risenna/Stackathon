@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Image, ScrollView, Text, View } from 'react-native'
 import styles from '../constants/Styles'
 
-const Start = (props) => {
+const Searching = (props) => {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
@@ -16,15 +16,29 @@ const Start = (props) => {
             style={styles.welcomeImage}
           />
         </View>
-        <Text>
-          Click Start to begin the search!
+        <Text style={styles.getStartedText}>
+          Here is your current position:
         </Text>
-        <View style={styles.start}>
-          <Button title="Start!" color="white" onPress={props.onPress} />
+        <Text>{`Latitude: ${props.currentLatitude}
+                    Longitude: ${props.currentLongitude}
+                    State count: ${props.count}`}
+          {props.error ?
+            <Text>Error: {props.error}</Text>
+            : null}
+        </Text>
+        <Text>
+          {`You are ${props.distance} meters from the marked location.`}
+        </Text>
+        <View style={styles.mark}>
+        <Text>
+          I give up! :(
+        </Text>
+          <Button title="Start Over" color="white" onPress={props.onPress} />
         </View>
       </ScrollView>
     </View>
   )
 }
 
-export default Start
+export default Searching
+
